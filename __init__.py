@@ -185,9 +185,9 @@ class GoogleGmailSkill(MycroftSkill):
 		msg_subject 	= HTMLParser().unescape(msg_headersT["Subject"])
 		msg_txt		= HTMLParser().unescape(msg["snippet"])
 
-		complete_phrase = "Email from "+msg_from_sender+"received "+msg_received+". with subject, "+msg_subject
+		complete_phrase = "Email from "+msg_from_sender+"received "+msg_received+", with subject, "+msg_subject
 		if detail is True:
-			complete_phrase = complete_phrase + ". Message: " + msg_txt
+			complete_phrase = complete_phrase + ", Message, " + msg_txt
 
 		self.speak(complete_phrase)
 

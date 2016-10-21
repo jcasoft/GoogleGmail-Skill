@@ -79,7 +79,7 @@ Restart Skills
 Features
 --------------------
 
-Currently this skill can do the following things to get information from your calendar (with some variation):
+Currently this skill can do the following things to get information from your Gmail Inbox, un-read e-mails (with some variation):
 
 - Check my gmail
 - Get my last gmail
@@ -88,17 +88,17 @@ Currently this skill can do the following things to get information from your ca
 - Get my last gmail with detail 
 - Get my last gmail with body   
 - Get my last 5 gmail
-- Get my last 5 gmail complete 
-- Get my last 5 gmail detailed
-- Get my last 5 gmail with detail 
-- Get my last 5 gmail with body
+- Get my last 6 gmail complete 
+- Get my last 7 gmail detailed
+- Get my last 8 gmail with detail 
+- Get my last 9 gmail with body
 - Get my gmail
 
 
 > **Note:**
 
 > - You can toggle key word with:
-> - The words: complete, detailes, with detail, with body; offer the same results
+> - The words: complete, detailed, with detail, with body; offer the same results
 
 
 
