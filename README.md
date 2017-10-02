@@ -1,67 +1,44 @@
-**GoogleGmail-Skill**
+**GoogleGmailSkill **
 ===================
 
-
-An skill to use with Mycroft which allow to get your emails from your Gmail Inbox.
+A skill to use with Mycroft which allow to get emails from your Gmail Inbox.
 
 ----------
 
 
-Installation
+Install Using MSM (Mycroft Skill Manager)
 -------------------
-Is necesary to make this procedure two times
 
-outside mycroft virtual environment for python 2
-
-    pip install google-api-python-client apiclient oauth2client httplib2
-	
-    or 
-
-    pip2 install google-api-python-client apiclient oauth2client httplib2
+    sudo msm install https://github.com/jcasoft/GoogleGmail-Skill.git
+    cd  /opt/mycroft/skills
 
 
-Now enter inside mycroft virtual environment
+Install Manualy
+-------------------
 
-Inside mycroft virtual environment
-
+    cd  /opt/mycroft/skills
+    git clone  https://github.com/jcasoft/GoogleGmailSkill.git skill-gmail
     workon mycroft
+    pip install -r requirements.txt
 
-    pip install google-api-python-client apiclient oauth2client httplib2
-
-
-Now go to Mycroft third party skill directory
-
-    cd  /opt/mycroft/third_party/
-
-    git clone  https://github.com/jcasoft/GoogleGmail-Skill.git mycroft-gmail-skill
-
-<i class="icon-cog"></i>Add 'GoogleGmail-Skill' section in your Mycroft configuration file on:
-
-    $HOME/.mycroft/mycroft.ini
-
-
-	[GoogleGmailSkill]
-	loginEnabled = True
-	maxResults = 10
-	timeFormat = 12		# 12 for AM/PM and 24 for 24 hours time format
 
 
 Authorize Google GMail Skill in distro with local web browser, wait web browse open and select "Allow"
 
-    From your command line go to third_party folder skill
+    From your command line go to mycroft skills folder
 
-    cd /opt/mycroft/third_party
-
-    python mycroft-gmail-skill
+    cd  /opt/mycroft/skills
+    workon mycroft
+    python skill-gmail
 
 	
-Authorize Google Calendar Skill in distro without local web browser
+Authorize GoogleGMailSkill in distro without local web browser
 
-    From your command line go to third_party folder skill
+    From your command line go to mycroft skills folder
 
-    cd /opt/mycroft/third_party
-
-    python mycroft-gmail-skill --noauth_local_webserver
+    cd  /opt/mycroft/skills
+    workon mycroft
+    python skill-gmail --noauth_local_webserver
 
 Open the generated link in computer with browser and wait the verification code and paste
 
@@ -69,9 +46,16 @@ Open the generated link in computer with browser and wait the verification code 
 
 
 
-Restart Skills
 
-    ./start.sh skills
+Edit your ~/.mycroft/mycroft.conf
+
+on "GoogleGmailSkill" section (added automatically)
+
+Restart Mycroft
+
+./stop-mycroft.sh
+./start-mycroft.sh debug
+
 
 ----------
 

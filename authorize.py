@@ -28,6 +28,8 @@ from json import JSONEncoder
 from HTMLParser import HTMLParser
 from datetime import datetime
 
+__author__ = 'jcasoft'
+
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()

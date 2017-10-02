@@ -7,7 +7,7 @@ from mycroft.util import record, play_mp3
 
 import httplib2
 import os
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, expanduser
 import sys
 
 from googleapiclient import discovery
@@ -27,7 +27,7 @@ from datetime import datetime
 logger = getLogger(dirname(__name__))
 sys.path.append(abspath(dirname(__file__)))
 
-__author__ = 'j c a soft'
+__author__ = 'jcasoft'
 
 SCOPES = 'https://www.googleapis.com/auth/gmail.readonly'
 CID = "992603803855-18na240ttgkgm4va2mvtiucqjreejvrm.apps.googleusercontent.com"
@@ -36,16 +36,6 @@ APPLICATION_NAME = 'Mycroft GMail Skill' + __author__.upper()
 
 loginEnabled = ""
 max_results = 10
-time_format = 12
-
-"""
-****************************************************
-Check the location of the Mycroft third_party Skill
-****************************************************
-"""
-python_out 		=  "/usr/bin/python2.7"
-third_party_skill 	= "/opt/mycroft/third_party/mycroft-gmail-skill/"
-effects 		= third_party_skill + "effects/"
 
 
 def get_credentials():
@@ -102,7 +92,7 @@ def main(max_results):
     	while 'nextPageToken' in response:
 		page_token = response['nextPageToken']
 		response = service.users().messages().list(userId=user_id,labelIds=label_id,maxResults=max_results,q=query,pageToken=page_token).execute()
-		messages.extend(response['messages'])
+		# messages.extend(response['messages'])
 
 	return messages
 
@@ -122,9 +112,22 @@ def GetMessage(user_id, msg_id):
 
 def parse_datetime_string(string):
     if '+' in string:
-	return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+	if "T" in string:
+		string = string[:-6]
+		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+	else:
+		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+
+    elif '-' in string:
+	if "T" in string:
+		string = string[:-6]
+		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
+	else:
+		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S -%f")
+
     else:
-	return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S -%f")
+	string = string[:-6]
+	return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
 
 
 class GoogleGmailSkill(MycroftSkill):
@@ -138,7 +141,7 @@ class GoogleGmailSkill(MycroftSkill):
 
     def google_gmail(self, msg=None):
 	"""
-    	Verify credentials to make google calendar connectionimport calendar
+    	Verify credentials to make google calendar connection
     	"""
 	argv = sys.argv
         sys.argv = []
@@ -173,6 +176,8 @@ class GoogleGmailSkill(MycroftSkill):
 		else:
 			msg_from_email	= msg_from[0][0:-1]	
 	
+		msg_from_sender = msg_from_sender.replace('. ',', ')
+
 		msg_received	= parse_datetime_string(msg_headersT["Date"])
 		msg_received_24	= msg_received.strftime("%A, %B %d, %Y at %H:%M")
 		msg_received_12 = msg_received.strftime("%A, %B %d, %Y at %I:%M %p")
@@ -185,7 +190,7 @@ class GoogleGmailSkill(MycroftSkill):
 		msg_subject 	= HTMLParser().unescape(msg_headersT["Subject"])
 		msg_txt		= HTMLParser().unescape(msg["snippet"])
 
-		complete_phrase = "Email from "+msg_from_sender+"received "+msg_received+", with subject, "+msg_subject
+		complete_phrase = "Email from "+msg_from_sender+" received "+msg_received+", with subject, "+msg_subject
 		if detail is True:
 			complete_phrase = complete_phrase + ", Message, " + msg_txt
 
@@ -196,17 +201,12 @@ class GoogleGmailSkill(MycroftSkill):
 
     def __init__(self):
         super(GoogleGmailSkill, self).__init__('GoogleGmailSkill')
-    	"""
-	Get the Google calandar parameters from config
-	today = time.strftime("%Y-%m-%dT%H:%M:%S-06:00") for use on create event
-	"""
+
 	self.loginEnabled = self.config.get('loginEnabled')
 	self.maxResults = self.config.get('maxResults')
 	self.time_format = self.config.get('time_format')
 
-	global python_out
-	global third_party_skill
-	global effects
+	global time_format
 
 	loginEnabled = self.loginEnabled 
 	max_results = self.maxResults
@@ -271,7 +271,7 @@ class GoogleGmailSkill(MycroftSkill):
 		self.speak_dialog('NotAccess')
 		return
 
-	description = message.metadata.get("utterance")
+	description = message.data.get("utterance")
 
 	detail = False
 	if ("complete" in description) or ("full" in description) or ("detail" in description) or ("detailed" in description) or ("body" in description) :
@@ -291,9 +291,9 @@ class GoogleGmailSkill(MycroftSkill):
 		self.speak_dialog('NotAccess')
 		return
 
-	x_mails	= message.metadata.get("XMailsKeyword") 
+	x_mails	= message.data.get("XMailsKeyword") 
 	x_mails = int(x_mails)
-	description = message.metadata.get("utterance")
+	description = message.data.get("utterance")
 	
 	detail = False
 	if ("complete" in description) or ("full" in description) or ("detail" in description) or ("detailed" in description) or ("body" in description) :
@@ -315,7 +315,7 @@ class GoogleGmailSkill(MycroftSkill):
 		self.speak_dialog('NotAccess')
 		return
 
-	description = message.metadata.get("utterance")
+	description = message.data.get("utterance")
 	
 	detail = False
 	if ("complete" in description) or ("full" in description) or ("detail" in description) or ("detailed" in description) or ("body" in description) :
