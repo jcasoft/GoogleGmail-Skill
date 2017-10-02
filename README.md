@@ -12,6 +12,7 @@ Install Using MSM (Mycroft Skill Manager)
     msm install https://github.com/jcasoft/GoogleGmail-Skill.git
 
 
+
 Install Manualy
 -------------------
 
@@ -55,6 +56,7 @@ on "GoogleGmailSkill" section (added automatically)
 Restart Mycroft
 
 ./stop-mycroft.sh
+
 ./start-mycroft.sh debug
 
 
