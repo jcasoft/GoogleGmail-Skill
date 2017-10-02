@@ -14,8 +14,8 @@
 import httplib2
 import os
 
-from apiclient import discovery
-from apiclient import errors
+from googleapiclient import discovery
+from googleapiclient import errors
 import oauth2client
 from oauth2client import file
 from oauth2client import client
@@ -23,8 +23,11 @@ from oauth2client import tools
 from oauth2client.file import Storage
 from oauth2client.client import OAuth2WebServerFlow
 
-import json
 from json import JSONEncoder
+
+import json
+import time
+from collections import OrderedDict
 from HTMLParser import HTMLParser
 from datetime import datetime
 
@@ -62,7 +65,45 @@ def get_credentials():
 	print 'Loaded credentials for Gmail Skill from ' + credential_dir
     return credentials
 
+def config_file():
+    home_dir = os.path.expanduser('~')
+    credential_dir = os.path.join(home_dir, '.mycroft')
+    filename = os.path.join(credential_dir,'mycroft.conf')
+    if os.path.isfile(filename):
+        try:
+            with open(filename, "r") as jsonFile:
+                data = json.load(jsonFile, object_pairs_hook=OrderedDict)
+                resultado = list(v for k,v in data.items() if "GoogleGmailSkill" in k.lower())
+                if len(resultado) == 0:	
+		    print "Updating configuration file"
+                    data["GoogleGmailSkill"]={"loginEnabled":False,"loginLevel":3,"maxResults":5,"time_format":12}
+                    try:
+                        with open(filename, "w") as jsonFile:
+                            jsonFile.write(json.dumps(OrderedDict(data), indent=4, sort_keys=False))
+                    except IOError as error:
+                            print "Saving configuration file failed"
+                            return False
+                    time.sleep(10)
+                else:
+                    return data
 
+        except IOError as error:
+            print "Reading config file failed"
+            return False
+    else:
+        print "Creating new Config file"
+        data = {"GoogleGmailSkill":{"loginEnabled":False,"loginLevel":3,"maxResults":5,"time_format":12}}
+        try:
+            with open(filename, "w") as jsonFile:
+                jsonFile.write(json.dumps(OrderedDict(data), indent=4, sort_keys=False))
+        except IOError as error:
+            print "Saving configuration file failed: "
+            return False
+
+        time.sleep(10)
+
+
+config_file()
 credentials = get_credentials()
 http = credentials.authorize(httplib2.Http())
 global service
@@ -91,4 +132,4 @@ try:
 except errors.HttpError, error:
 	print 'An error occurred: %s' % error
 
-print 'Your Google Calendar Skill is now authenticated '
+print 'Your Google Gmail Skill is now authenticated '
