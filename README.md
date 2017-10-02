@@ -9,7 +9,7 @@ A skill to use with Mycroft which allow to get emails from your Gmail Inbox.
 Install Using MSM (Mycroft Skill Manager)
 -------------------
 
-    sudo msm install https://github.com/jcasoft/GoogleGmail-Skill.git
+    sudo msm install https://github.com/jcasoft/GoogleGmail-Skill.git skill-gmail
     cd  /opt/mycroft/skills
 
 
