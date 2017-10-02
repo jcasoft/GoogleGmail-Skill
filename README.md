@@ -12,12 +12,14 @@ Install Using MSM (Mycroft Skill Manager)
     msm install https://github.com/jcasoft/GoogleGmail-Skill.git
 
 
+If it does not work with the MSM method try it with the manual method
 
-Install Manualy
+
+Manual Method
 -------------------
 
     cd  /opt/mycroft/skills
-    git clone  https://github.com/jcasoft/GoogleGmail-Skill.git
+    git clone https://github.com/jcasoft/GoogleGmail-Skill.git
     workon mycroft
     pip install -r requirements.txt
 
@@ -40,7 +42,7 @@ Authorize GoogleGMailSkill in distro without local web browser
 
     cd  /opt/mycroft/skills
     workon mycroft
-    python skill-gmail --noauth_local_webserver
+    python GoogleGmail-Skill --noauth_local_webserver
 
 Open the generated link in computer with browser and wait the verification code and paste
 
