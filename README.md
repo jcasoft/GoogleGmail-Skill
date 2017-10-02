@@ -1,4 +1,4 @@
-**GoogleGmailSkill **
+GoogleGmail-Skill
 ===================
 
 A skill to use with Mycroft which allow to get emails from your Gmail Inbox.
@@ -9,19 +9,20 @@ A skill to use with Mycroft which allow to get emails from your Gmail Inbox.
 Install Using MSM (Mycroft Skill Manager)
 -------------------
 
-    sudo msm install https://github.com/jcasoft/GoogleGmail-Skill.git skill-gmail
-    cd  /opt/mycroft/skills
+    sudo msm install https://github.com/jcasoft/GoogleGmail-Skill.git
 
 
 Install Manualy
 -------------------
 
     cd  /opt/mycroft/skills
-    git clone  https://github.com/jcasoft/GoogleGmailSkill.git skill-gmail
+    git clone  https://github.com/jcasoft/GoogleGmail-Skill.git
     workon mycroft
     pip install -r requirements.txt
 
 
+Authorize Google GMail
+-------------------
 
 Authorize Google GMail Skill in distro with local web browser, wait web browse open and select "Allow"
 
@@ -29,7 +30,7 @@ Authorize Google GMail Skill in distro with local web browser, wait web browse o
 
     cd  /opt/mycroft/skills
     workon mycroft
-    python skill-gmail
+    python GoogleGmail-Skill
 
 	
 Authorize GoogleGMailSkill in distro without local web browser
