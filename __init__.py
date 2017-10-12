@@ -92,7 +92,6 @@ def main(max_results):
     	while 'nextPageToken' in response:
 		page_token = response['nextPageToken']
 		response = service.users().messages().list(userId=user_id,labelIds=label_id,maxResults=max_results,q=query,pageToken=page_token).execute()
-		# messages.extend(response['messages'])
 
 	return messages
 
@@ -114,7 +113,7 @@ def parse_datetime_string(string):
     if '+' in string:
 	if "T" in string:
 		string = string[:-6]
-		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
 	else:
 		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
 

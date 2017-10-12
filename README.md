@@ -6,25 +6,26 @@ A skill to use with Mycroft which allow to get emails from your Gmail Inbox.
 ----------
 
 
-Install Using MSM (Mycroft Skill Manager)
+Install Using MSM (Mycroft Skill Manager)  not for Mark1
 -------------------
 
     msm install https://github.com/jcasoft/GoogleGmail-Skill.git
 
 
 If it does not work with the MSM method try it with the manual method
+For install in Mark1 use Manual Method on Mark1
+of Manual Method not for Mark1
 
-
-Manual Method
+Manual Method not for Mark1
 -------------------
 
     cd  /opt/mycroft/skills
     git clone https://github.com/jcasoft/GoogleGmail-Skill.git
-    workon mycroft
-    pip install -r requirements.txt
+    workon mycroft (Only if you have installed Mycroft on Virtualenv)
+    cd GoogleGmail-Skill
+    sudo pip install -r requirements.txt
 
-
-Authorize Google GMail
+Authorize Google GMail not for Mark1
 -------------------
 
 Authorize Google GMail Skill in distro with local web browser, wait web browse open and select "Allow"
@@ -35,13 +36,35 @@ Authorize Google GMail Skill in distro with local web browser, wait web browse o
     workon mycroft
     python GoogleGmail-Skill
 
+
+Edit your mycroft.conf
+on "GoogleGmailSkill"  edit your options
+
+     cd ~/mycroft/.mycroft
+     sudo nano mycroft.conf
+
+
+Manual Method for Mark1
+-------------------
+
+    open SSH session
+
+    cd  /opt/mycroft/skills
+    git clone https://github.com/jcasoft/GoogleGmail-Skill.git
+    cd GoogleGmail-Skill
+    sudo pip install -r requirements.txt
+
+
+Authorize Google GMail for Mark1
+-------------------
 	
-Authorize GoogleGMailSkill in distro without local web browser
+Authorize GoogleGMailSkill in Mark1 without local web browser
+
+    open SSH session
 
     From your command line go to mycroft skills folder
 
     cd  /opt/mycroft/skills
-    workon mycroft
     python GoogleGmail-Skill --noauth_local_webserver
 
 Open the generated link in computer with browser and wait the verification code and paste
@@ -49,11 +72,25 @@ Open the generated link in computer with browser and wait the verification code 
      Enter verification code: 4/oxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   
 
 
+The installation process generates automatically the file ~/.mycroft/mycroft.conf and ~/.credentials/mycroft-gmail-skill.json
 
 
-Edit your ~/.mycroft/mycroft.conf
+Then copy the following files and fix the permissions
 
-on "GoogleGmailSkill" section (added automatically)
+     sudo mkdir /home/mycroft/.credentials
+     sudo cp /home/pi/.credentials/mycroft-gmail-skill.json /home/mycroft/.credentials/mycroft-gmail-skill.json
+     sudo chmod -R 777 /home/mycroft/.credentials
+
+     sudo cp /home/pi/.mycroft/mycroft.conf /home/mycroft/.mycroft/mycroft.conf
+     sudo chmod -R 777 /home/mycroft/.mycroft
+
+
+Edit your mycroft.conf
+on "GoogleGmailSkill"  edit your options
+
+     cd /home/mycroft/.mycroft
+     sudo nano mycroft.conf
+
 
 Restart Mycroft
 

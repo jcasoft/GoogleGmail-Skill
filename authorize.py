@@ -124,7 +124,6 @@ try:
     	while 'nextPageToken' in response:
 		page_token = response['nextPageToken']
 		response = service.users().messages().list(userId=user_id,labelIds=label_id,maxResults=5,q=query,pageToken=page_token).execute()
-		messages.extend(response['messages'])
 
 	print (json.dumps(messages[0], indent=4, sort_keys=True))
 
