@@ -24,6 +24,9 @@ from json import JSONEncoder
 from HTMLParser import HTMLParser
 from datetime import datetime
 
+from tzlocal import get_localzone
+import dateutil.parser
+
 logger = getLogger(dirname(__name__))
 sys.path.append(abspath(dirname(__file__)))
 
@@ -109,27 +112,33 @@ def GetMessage(user_id, msg_id):
 		print 'An error occurred: %s' % error
 
 
+
 def parse_datetime_string(string):
     if '+' in string:
 	if "T" in string:
 		string = string[:-6]
-		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
+		if "+" in string:
+			return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+		else:
+			return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
 	else:
 		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
 
     elif '-' in string:
 	if "T" in string:
 		string = string[:-6]
-		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
+		if "+" in string:
+			return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S +%f")
+		else:
+			return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
 	else:
 		return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S -%f")
 
     else:
-	string = string[:-6]
-	return datetime.strptime(string,"%a, %d %b %Y %H:%M:%S")
+	return dateutil.parser.parse(string)
 
 
-class GoogleGmailSkill(MycroftSkill):
+class GoogleGmail-Skill(MycroftSkill):
     """
     A Skill to check your google calendar
     also can add events
@@ -332,4 +341,4 @@ class GoogleGmailSkill(MycroftSkill):
 
 
 def create_skill():
-    return GoogleGmailSkill()
+    return GoogleGmail-Skill()

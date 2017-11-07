@@ -22,10 +22,9 @@ Manual Method not for Mark1
     cd  /opt/mycroft/skills
     git clone https://github.com/jcasoft/GoogleGmail-Skill.git
     workon mycroft (Only if you have installed Mycroft on Virtualenv)
-    cd GoogleGmail-Skill
-    sudo pip install -r requirements.txt
+    pip install -r requirements.txt
 
-Authorize Google GMail not for Mark1
+Authorize Google GMail not for Mark1 after install
 -------------------
 
 Authorize Google GMail Skill in distro with local web browser, wait web browse open and select "Allow"
@@ -37,28 +36,24 @@ Authorize Google GMail Skill in distro with local web browser, wait web browse o
     python GoogleGmail-Skill
 
 
-Edit your mycroft.conf
-on "GoogleGmailSkill"  edit your options
+Edit your ~/.mycroft/mycroft.conf
 
-     cd ~/mycroft/.mycroft
-     sudo nano mycroft.conf
+on "GoogleGmail-Skill" section (added automatically)
+
 
 
 Manual Method for Mark1
 -------------------
 
-    open SSH session
-
     cd  /opt/mycroft/skills
     git clone https://github.com/jcasoft/GoogleGmail-Skill.git
-    cd GoogleGmail-Skill
-    sudo pip install -r requirements.txt
+    pip install -r requirements.txt
 
 
-Authorize Google GMail for Mark1
+Authorize Google GMail for Mark1 after install
 -------------------
 	
-Authorize GoogleGMailSkill in Mark1 without local web browser
+Authorize GoogleGMail-Skill in Mark1 without local web browser
 
     open SSH session
 
@@ -74,6 +69,8 @@ Open the generated link in computer with browser and wait the verification code 
 
 The installation process generates automatically the file ~/.mycroft/mycroft.conf and ~/.credentials/mycroft-gmail-skill.json
 
+Edit your ~/.mycroft/mycroft.conf
+on "GoogleGmail-Skill"  edit your options
 
 Then copy the following files and fix the permissions
 
@@ -82,21 +79,17 @@ Then copy the following files and fix the permissions
      sudo chmod -R 777 /home/mycroft/.credentials
 
      sudo cp /home/pi/.mycroft/mycroft.conf /home/mycroft/.mycroft/mycroft.conf
-     sudo chmod -R 777 /home/mycroft/.mycroft
+     sudo chmod -R 777 /home/pi/.mycroft
 
 
-Edit your mycroft.conf
-on "GoogleGmailSkill"  edit your options
-
-     cd /home/mycroft/.mycroft
-     sudo nano mycroft.conf
 
 
 Restart Mycroft
 
 ./stop-mycroft.sh
-
 ./start-mycroft.sh debug
+
+or Reboot Mycroft Mark 1
 
 
 ----------
